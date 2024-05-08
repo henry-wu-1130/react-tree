@@ -4,6 +4,8 @@ React Tree Node is a tree data structure UI library designed for easily building
 
 <!-- [Demo](https://stackblitz.com/edit/react-beautiful-timeline?file=src%2FApp.tsx) -->
 
+**Note: This project is for testing purposes only and is not intended for production use.**
+
 ## Features
 
 <!-- - 🚥&nbsp; **Versatile Display**: Render timelines in both `Horizontal` and `Vertical` modes, providing flexibility in presentation.
@@ -33,6 +35,12 @@ Using [npm](https://npmjs.com/)
   npm install @henliwu1491/react-tree-node
 ```
 
+2. Import css:
+
+```
+import "
+```
+
 ## Usage
 
 Example:
@@ -59,7 +67,6 @@ export default function Tree() {
               : prev.filter((id) => id !== item.value)
         );
       }}
-      shouldShowNodeCount
       icon={{
         expand: '👉',
         collapse: '👇',
@@ -84,7 +91,6 @@ function Tree() {
     leafName,
     onExpand,
     onSelect,
-    shouldShowNodeCount,
     expandedId,
     selectedId,
   });
@@ -109,15 +115,14 @@ function Tree() {
 
 Below are the available configuration options for the component:
 
-| Name                  | Type       | Description                                                |
-| --------------------- | ---------- | ---------------------------------------------------------- |
-| `data`                | `array`    | Raw data                                                   |
-| `idName`              | `string`   | Custom id key for each tree node (default is `id`)         |
-| `leafName`            | `string`   | Custom leaf key for each tree node (default is `leaf`)     |
-| `shouldShowNodeCount` | `boolean`  | When set to `true`, `count` key is needed in raw data      |
-| `onExpand`            | `function` | Callback function you can get node item from the parameter |
-| `onSelect`            | `function` | Callback function you can get node item from the parameter |
-| `initialState`        | `object`   | default state provided at the first time.                  |
+| Name           | Type       | Description                                                |
+| -------------- | ---------- | ---------------------------------------------------------- |
+| `data`         | `array`    | Raw data                                                   |
+| `idName`       | `string`   | Custom id key for each tree node (default is `id`)         |
+| `leafName`     | `string`   | Custom leaf key for each tree node (default is `leaf`)     |
+| `onExpand`     | `function` | Callback function you can get node item from the parameter |
+| `onSelect`     | `function` | Callback function you can get node item from the parameter |
+| `initialState` | `object`   | default state provided at the first time.                  |
 
 ## `useTreeView`
 

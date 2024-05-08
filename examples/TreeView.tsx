@@ -1,6 +1,6 @@
 import React from 'react';
 import TreeView from '../lib/components/TreeView';
-import './index.css';
+import '../lib/styles.css';
 
 const data = [
   {
@@ -76,7 +76,6 @@ export default function Tree() {
               : prev.filter((id) => id !== item.value)
         );
       }}
-      shouldShowNodeCount
       icon={{
         expand: '👉',
         collapse: '👇',
