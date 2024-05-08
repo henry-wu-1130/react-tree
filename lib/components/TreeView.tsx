@@ -24,18 +24,15 @@ export const TreeContext = createContext<ContextType>({
   onSelect: () => {},
   dispatch: () => {},
   icon: {
-    expand: <>&darr;</>,
-    collapse: <>&uarr;</>,
+    expand: '🔽',
+    collapse: '🔼',
     leaf: '🍃',
     node: '🌲',
     selected: '🔵',
     unSelected: '⚪',
   },
-  shouldShowNodeCount: false,
   getLabel: (node) => node.label,
 });
-
-const numberFormat = (value: number) => new Intl.NumberFormat().format(value);
 
 const TreeNode = ({
   node,
@@ -51,7 +48,6 @@ const TreeNode = ({
     leafName,
     onExpand,
     onSelect,
-    shouldShowNodeCount,
     icon,
     getLabel,
   } = useContext(TreeContext);
@@ -110,23 +106,13 @@ const TreeNode = ({
         </div>
         <div
           className={cx('label')}
-          title={
-            isLeaf
-              ? `${node.label}`
-              : shouldShowNodeCount
-                ? `${node.label}(${numberFormat(node.count || 0)})`
-                : `${node.label}`
-          }
+          title={node.label}
           onClick={(e) => {
             e.stopPropagation();
             handleSelectId();
           }}
         >
-          {isLeaf
-            ? getLabel(node)
-            : shouldShowNodeCount
-              ? `${node.label}(${numberFormat(node.count || 0)})`
-              : getLabel(node)}
+          {getLabel(node)}
         </div>
       </div>
       <div className={cx('flex', 'flex-col', 'node-children')}>
@@ -147,7 +133,6 @@ function Tree({
   onExpand,
   onSelect,
   //
-  shouldShowNodeCount = false,
   icon,
   getLabel = (node) => node.label,
 }: TreeProps): React.ReactNode {
@@ -170,18 +155,6 @@ function Tree({
     ));
   };
 
-  // useEffect(() => {
-  //   if (selectedId && selectedId.length) {
-  //     dispatch({ type: TreeActionTypes.SELECT_ID, payload: selectedId });
-  //   }
-  // }, [selectedId, dispatch]);
-
-  // useEffect(() => {
-  //   if (expandedId && expandedId.length) {
-  //     dispatch({ type: TreeActionTypes.EXPAND, payload: expandedId });
-  //   }
-  // }, [expandedId, dispatch]);
-
   useEffect(() => {
     dispatch({
       type: TreeActionTypes.SET_INITIAL_STATE,
@@ -190,9 +163,7 @@ function Tree({
   }, [dispatch, initialState]);
 
   return (
-    <TreeContext.Provider
-      value={{ ...treeProps, icon, shouldShowNodeCount, getLabel }}
-    >
+    <TreeContext.Provider value={{ ...treeProps, icon, getLabel }}>
       {renderNodes(state.nodes)}
     </TreeContext.Provider>
   );
