@@ -17,7 +17,6 @@ declare global {
 
   export type TreeProps = TreeHookProps & {
     icon?: IconConfig;
-    shouldShowNodeCount: boolean;
     getLabel: (node: TreeData) => React.ReactNode;
   };
 
@@ -43,7 +42,6 @@ declare global {
     onExpand?: (node: TreeData) => void;
     onSelect?: (node: TreeData) => void;
     icon?: IconConfig;
-    shouldShowNodeCount: boolean;
     getLabel: (node: TreeData) => React.ReactNode;
   };
 
