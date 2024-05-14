@@ -48,7 +48,7 @@ export type TreeContextType = {
   onExpand?: (node: TreeData) => void;
   onSelect?: (node: TreeData) => void;
   icon?: IconConfig;
-  getLabel?: (node: TreeData) => React.ReactNode;
+  getLabel: (node: TreeData) => React.ReactNode;
 };
 
 export type TreeInitialState = {

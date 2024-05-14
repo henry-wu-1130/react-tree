@@ -81,16 +81,16 @@ export default function Tree() {
       initialState={{ selectedId, expandedId }}
       data={data}
       idName="value"
-      getLabel={(item) => {
-        if (item.type === 'leaf') {
-          return (
-            <div className="flex">
-              <div>Leaf: {item.label}</div>
-            </div>
-          );
-        }
-        return item.label;
-      }}
+      // getLabel={(item) => {
+      //   if (item.type === 'leaf') {
+      //     return (
+      //       <div className="flex">
+      //         <div>Leaf: {item.label}</div>
+      //       </div>
+      //     );
+      //   }
+      //   return item.label;
+      // }}
       // onExpand={(item) => {
       //   setExpandedId((prev) =>
       //     prev.length === 0
