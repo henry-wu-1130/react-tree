@@ -1,5 +1,3 @@
-// TODO: Hash className
-// TODO: Optimize with useRef
 import {
   useState,
   useEffect,
