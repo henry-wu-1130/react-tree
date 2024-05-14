@@ -8,6 +8,17 @@
   "main": "./dist/index.umd.js",
   "module": "./dist/index.es.js",
   "types": "./dist/index.d.ts",
+  "keywords": [
+    "react",
+    "tree",
+    "checkbox",
+    "component"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/henry-wu-1130/react-tree.git"
+  },
+  "homepage": "https://henry-wu-1130.github.io/react-tree",
   "files": [
     "dist"
   ],
@@ -34,10 +45,8 @@
     "./lib/**/*.{ts,tsx,js,jsx,css}": "prettier --write"
   },
   "peerDependencies": {
-    "clsx": "^2.1.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "uuid": "^9.0.1"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@types/node": "^20.10.4",
@@ -64,5 +73,9 @@
     "typescript": "^5.2.2",
     "vite": "^5.0.8",
     "vite-plugin-dts": "^3.6.4"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "uuid": "^9.0.1"
   }
 }
