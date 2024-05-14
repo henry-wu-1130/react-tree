@@ -9,7 +9,7 @@ import {
 } from 'react';
 import useTreeView from '../hooks/useTreeView';
 import {
-  TreeNode,
+  type TreeNode,
   TreeContextType,
   TreeNodeKey,
   TreeActionTypes,
