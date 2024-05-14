@@ -26,7 +26,7 @@ export type TreeHookReturnProps = TreeHookProps & {
 
 export type TreeProps = TreeHookProps & {
   icon?: IconConfig;
-  getLabel: (node: TreeData) => React.ReactNode;
+  getLabel?: (node: TreeData) => React.ReactNode;
   value?: TreeInitialState;
 };
 
@@ -48,7 +48,7 @@ export type TreeContextType = {
   onExpand?: (node: TreeData) => void;
   onSelect?: (node: TreeData) => void;
   icon?: IconConfig;
-  getLabel: (node: TreeData) => React.ReactNode;
+  getLabel?: (node: TreeData) => React.ReactNode;
 };
 
 export type TreeInitialState = {
@@ -87,7 +87,6 @@ export type TreeRawData = {
   id: string;
   label: string;
   value: string;
-  count?: number;
   children?: TreeRawData[];
   isChecked?: boolean;
   isExpanded?: boolean;
@@ -105,7 +104,6 @@ export type TreeNode = {
   value: string;
   type?: string;
   level?: number;
-  count?: number;
   idName?: StringTreeNodeKey;
   leafName?: string;
   children?: TreeNode[];

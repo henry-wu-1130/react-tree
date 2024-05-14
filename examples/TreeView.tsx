@@ -7,7 +7,6 @@ const data = [
   {
     label: 'Pet',
     value: '1',
-    count: 8,
     id: '1',
     children: [
       {
@@ -27,7 +26,6 @@ const data = [
   {
     label: 'Store',
     value: '2',
-    count: 4,
     id: '2',
     children: [
       {
