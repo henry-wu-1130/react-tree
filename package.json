@@ -26,7 +26,8 @@
     "lint": "eslint --fix './lib/**/*.{ts,tsx,js,jsx}' && prettier . --write './lib/**/*.{ts,tsx,js,jsx,css}'",
     "preview": "vite preview",
     "prepare": "husky install",
-    "release": "npx commit-and-tag-version && npm run build && npm publish --access public"
+    "release": "npx commit-and-tag-version && npm run build",
+    "publish": "npm publish --access public"
   },
   "lint-staged": {
     "./lib/**/*.{ts,tsx,js,jsx}": "eslint --fix",
