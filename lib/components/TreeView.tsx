@@ -92,16 +92,19 @@ const TreeNode = ({
           n.value + '' !== node.value + ''
       );
       const childrenSelected = children.filter((n) => n.isChecked);
-
-      if (
-        !!children.length &&
-        !node.isChecked &&
-        childrenSelected.length === children.length
-      ) {
-        dispatch({
-          type: TreeActionTypes.SET_SELECTED,
-          payload: node.value + '',
-        });
+      if (children.length > 0) {
+        if (!node.isChecked && childrenSelected.length === children.length) {
+          dispatch({
+            type: TreeActionTypes.SET_SELECTED,
+            payload: node.value + '',
+          });
+        }
+        if (node.isChecked && childrenSelected.length === 0) {
+          dispatch({
+            type: TreeActionTypes.SET_SELECTED,
+            payload: node.value + '',
+          });
+        }
       }
     }
   }, [dispatch, flattenNodes, node.isChecked, node.value]);
@@ -115,7 +118,14 @@ const TreeNode = ({
         isRoot ? 'react-tree-node--root' : 'react-tree-node'
       )}
     >
-      <div className={cx('flex', 'items-center', 'react-tree-label-container')}>
+      <div
+        className={cx(
+          'flex',
+          'items-center',
+          'react-tree-label-container',
+          isLeaf ? 'react-tree-label-container--leaf' : ''
+        )}
+      >
         {(!isLeaf || (isLeaf && !!icon?.leaf)) && (
           <div
             className={cx(

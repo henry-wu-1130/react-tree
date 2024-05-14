@@ -10,16 +10,36 @@ React Tree is a tree data structure ui library designed for easily building tree
 
 - 🪝&nbsp; **Hook provided**: useTreeView hooks provide tree expanded & selected state for easily render tree component
 
-- 🖼️&nbsp; **Custom Icons**: Enhance visual appeal by using custom icons within the dots of the timeline.
+- 🖼️&nbsp; **Custom Icons**: Supports custom icons using React nodes for enhanced visual appeal.
 
 ## Installation
 
-Using [npm](https://npmjs.com/)
+Using npm, Yarn, or PNPM:
 
-1. Install the package:
+1. Install the package with npm:
 
 ```
-  npm install @henliwu1491/react-tree
+npm install @henliwu1491/react-tree
+```
+
+2. Install the package with Yarn:
+
+```
+yarn add @henliwu1491/react-tree
+```
+
+3. Install the package with PNPM:
+
+```
+pnpm add @henliwu1491/react-tree
+```
+
+Choose the package manager that you prefer for installation.
+
+## Include CSS
+
+```
+import @henliwu1491/react-tree/dist/style.css"
 ```
 
 ## Usage
@@ -69,16 +89,16 @@ export default function Tree() {
 
 Below are the available configuration options for the component:
 
-| Name           | Type               | Description                                                                          |
-| -------------- | ------------------ | ------------------------------------------------------------------------------------ |
-| `initialState` | `TreeInitialState` | Optional.                                                                            |
-| `data`         | `TreeRawData[]`    | Required. Your raw tree structure data. (must contain `id`, `label` and `value` key) |
-| `idName`       | `string`           | Optional. Assign a custom id key if you have provided. (default is `id`)             |
-| `onExpand`     | `function`         | Optional. Callback function you can get node item from the parameter.                |
-| `onSelect`     | `function`         | Optional. Callback function you can get node item from the parameter.                |
-| `value`        | `TreeInitialState` | Optional. Control your own state.                                                    |
-| `icon`         | `IconConfig`       | Optional. Provide your custom icon, React.ReactNode only.                            |
-| `getLabel`     | `function`         | Optional. Your own label render function.                                            |
+| Name           | Type               | Description                                                                          | Default |
+| -------------- | ------------------ | ------------------------------------------------------------------------------------ | ------- |
+| `initialState` | `TreeInitialState` | Optional.                                                                            |         |
+| `data`         | `TreeRawData[]`    | Required. Your raw tree structure data. (must contain `id`, `label` and `value` key) |         |
+| `idName`       | `string`           | Optional. Assign a custom id key if you have provided. (default is `id`)             |         |
+| `onExpand`     | `function`         | Optional. Callback function you can get node item from the parameter.                |         |
+| `onSelect`     | `function`         | Optional. Callback function you can get node item from the parameter.                |         |
+| `value`        | `TreeInitialState` | Optional. Control your own state.                                                    |         |
+| `icon`         | `IconConfig`       | Optional. Provide your custom icon, React.ReactNode only.                            |         |
+| `getLabel`     | `function`         | Optional. Your own label render function.                                            |         |
 
 ### initialState
 
