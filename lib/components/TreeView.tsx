@@ -1,13 +1,21 @@
-import { createContext, useEffect, useContext, useCallback } from 'react';
-import cx from 'clsx';
+// TODO: Hash className
+// TODO: Optimize with useRef
+import {
+  useState,
+  useEffect,
+  useContext,
+  useCallback,
+  createContext,
+} from 'react';
 import useTreeView from '../hooks/useTreeView';
-import '../styles/index.css';
-
-enum TreeActionTypes {
-  EXPAND = 'EXPAND',
-  SELECT_ID = 'SELECT_ID',
-  SET_INITIAL_STATE = 'SET_INITIAL_STATE',
-}
+import {
+  TreeNode,
+  TreeContextType,
+  TreeNodeKey,
+  TreeActionTypes,
+  TreeProps,
+} from '../types';
+import cx from 'clsx';
 
 const defaultInitialState = {
   expandedId: [],
@@ -16,23 +24,7 @@ const defaultInitialState = {
   nodes: [],
 };
 
-export const TreeContext = createContext<ContextType>({
-  state: defaultInitialState,
-  idName: 'id',
-  leafName: 'leaf',
-  onExpand: () => {},
-  onSelect: () => {},
-  dispatch: () => {},
-  icon: {
-    expand: '🔽',
-    collapse: '🔼',
-    leaf: '🍃',
-    node: '🌲',
-    selected: '🔵',
-    unSelected: '⚪',
-  },
-  getLabel: (node) => node.label,
-});
+export const TreeContext = createContext<TreeContextType | null>(null);
 
 const TreeNode = ({
   node,
@@ -42,7 +34,7 @@ const TreeNode = ({
   renderNodes: (nodes: TreeNode[]) => React.ReactNode;
 }) => {
   const {
-    state: { expandedId, selectedId },
+    state: { expandedId, selectedId, flattenNodes },
     dispatch,
     idName,
     leafName,
@@ -50,72 +42,131 @@ const TreeNode = ({
     onSelect,
     icon,
     getLabel,
-  } = useContext(TreeContext);
+  } = useContext(TreeContext as React.Context<TreeContextType>);
 
   const id = idName ? node[idName as TreeNodeKey] : node.value + '';
-  const isExpandedId = expandedId.indexOf(id) !== -1;
 
   const isRoot = node.level === 0;
   const isLeaf = leafName ? node.type === leafName : node.type === 'leaf';
+  const isExpandedId = expandedId.indexOf(id) !== -1;
   const isSelectedId = selectedId.includes(id);
 
+  const shouldShowExpand = !isLeaf;
   const shouldShowExpandContent =
     isExpandedId && !!node.children && node.children.length;
-  const shouldShowExpand = !isLeaf;
+  const shouldShowSelectIcon =
+    icon?.checked || icon?.unchecked || icon?.indeterminate;
+
+  const [
+    isIndeterminate,
+    // setIsIndeterminate
+  ] = useState(false);
+  const [
+    isAllChecked,
+    //setIsAllChecked
+  ] = useState(false);
 
   const handleExpand = useCallback(() => {
-    dispatch({ type: TreeActionTypes.EXPAND, payload: [id] });
+    dispatch({
+      type: TreeActionTypes.EXPAND_WITH_ID,
+      payload: node.value + '',
+    });
     if (typeof onExpand === 'function') {
       onExpand(node);
     }
-  }, [dispatch, id, node, onExpand]);
+  }, [dispatch, node, onExpand]);
 
-  const handleSelectId = useCallback(() => {
-    dispatch({ type: TreeActionTypes.SELECT_ID, payload: id });
+  const handleSelect = useCallback(() => {
+    dispatch({
+      type: TreeActionTypes.SELECT_WITH_ID,
+      payload: node.value + '',
+    });
     if (typeof onSelect === 'function') {
       onSelect(node);
     }
-  }, [dispatch, id, node, onSelect]);
+  }, [dispatch, node, onSelect]);
+
+  useEffect(() => {
+    if (flattenNodes.length) {
+      const children = flattenNodes.filter(
+        (n) =>
+          (n.value + '').startsWith(node.value + '') &&
+          n.value + '' !== node.value + ''
+      );
+      const childrenSelected = children.filter((n) => n.isChecked);
+
+      if (
+        !!children.length &&
+        !node.isChecked &&
+        childrenSelected.length === children.length
+      ) {
+        dispatch({
+          type: TreeActionTypes.SET_SELECTED,
+          payload: node.value + '',
+        });
+      }
+    }
+  }, [dispatch, flattenNodes, node.isChecked, node.value]);
 
   return (
-    <div id={id} className={cx('flex', 'flex-col', isRoot ? 'root' : 'node')}>
-      <div
-        className={cx(
-          'flex',
-          'align-items-center',
-          'label-container',
-          isSelectedId && 'label-container--unselected'
+    <div
+      id={id}
+      className={cx(
+        'flex',
+        'flex-col',
+        isRoot ? 'react-tree-node--root' : 'react-tree-node'
+      )}
+    >
+      <div className={cx('flex', 'items-center', 'react-tree-label-container')}>
+        {(!isLeaf || (isLeaf && !!icon?.leaf)) && (
+          <div
+            className={cx(
+              'flex',
+              'items-center',
+              'justify-center',
+              'react-tree-icon-container'
+            )}
+            onClick={!isLeaf ? handleExpand : () => null}
+          >
+            {shouldShowExpand
+              ? isExpandedId
+                ? icon?.expand
+                : icon?.collapse
+              : null}
+            {node.type === 'leaf' && icon?.leaf && icon?.leaf}
+          </div>
         )}
-      >
+        {shouldShowSelectIcon && (
+          <div
+            className={cx(
+              'flex',
+              'items-center',
+              'justify-center',
+              'react-tree-icon-container'
+            )}
+            onClick={handleSelect}
+          >
+            {isAllChecked
+              ? icon?.checked
+              : isIndeterminate
+                ? icon?.indeterminate
+                : isSelectedId
+                  ? icon?.checked
+                  : icon?.unchecked}
+          </div>
+        )}
         <div
-          className={cx(
-            'flex',
-            'align-items-center',
-            'justify-content-center',
-            'icon-container',
-            isLeaf && !icon?.leaf && 'none'
-          )}
-          onClick={handleExpand}
-        >
-          {shouldShowExpand
-            ? isExpandedId
-              ? icon?.expand
-              : icon?.collapse
-            : null}
-          {node.type === 'leaf' && icon?.leaf && icon?.leaf}
-        </div>
-        <div
-          className={cx('label')}
+          className={cx('react-tree-label')}
           title={node.label}
           onClick={(e) => {
             e.stopPropagation();
-            handleSelectId();
+            handleSelect();
           }}
         >
           {getLabel(node)}
         </div>
       </div>
-      <div className={cx('flex', 'flex-col', 'node-children')}>
+      <div className={cx('flex', 'flex-col', 'react-tree-node--children')}>
         {shouldShowExpandContent && renderNodes(node.children || [])}
       </div>
     </div>
@@ -124,6 +175,7 @@ const TreeNode = ({
 
 function Tree({
   initialState = defaultInitialState,
+  value,
   data,
   idName,
   leafName,
@@ -149,18 +201,20 @@ function Tree({
 
   const { state, dispatch } = treeProps;
 
-  const renderNodes = (nodes: TreeNode[] | []) => {
+  const renderNodes = useCallback((nodes: TreeNode[] | []) => {
     return nodes.map((node, nodeIdx) => (
       <TreeNode key={nodeIdx} node={node} renderNodes={renderNodes} />
     ));
-  };
+  }, []);
 
   useEffect(() => {
-    dispatch({
-      type: TreeActionTypes.SET_INITIAL_STATE,
-      payload: initialState,
-    });
-  }, [dispatch, initialState]);
+    if (value) {
+      dispatch({
+        type: TreeActionTypes.SET_INITIAL_STATE,
+        payload: value,
+      });
+    }
+  }, [dispatch, value]);
 
   return (
     <TreeContext.Provider value={{ ...treeProps, icon, getLabel }}>
