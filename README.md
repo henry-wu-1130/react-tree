@@ -1,6 +1,6 @@
-# React Tree Node
+# React Tree
 
-React Tree Node is a tree data structure UI library designed for easily building tree components.
+React Tree is a tree data structure ui library designed for easily building tree components.
 
 <!-- [Demo](https://stackblitz.com/edit/react-beautiful-timeline?file=src%2FApp.tsx) -->
 
@@ -8,22 +8,9 @@ React Tree Node is a tree data structure UI library designed for easily building
 
 ## Features
 
-<!-- - 🚥&nbsp; **Versatile Display**: Render timelines in both `Horizontal` and `Vertical` modes, providing flexibility in presentation.
-
-- 📺&nbsp; **Auto Animation**: Enjoy the seamless experience of auto-starting animations when the timeline enters the viewport.
-
-- 🔧&nbsp; **Easy Customization**: Effortlessly render custom content with straightforward customization options.
-
-- 🎭&nbsp; **Component Flexibility**: Customize every component with ease, allowing you to tailor the appearance to your specific needs.
+- 🪝&nbsp; **Hook provided**: useTreeView hooks provide tree expanded & selected state for easily render tree component
 
 - 🖼️&nbsp; **Custom Icons**: Enhance visual appeal by using custom icons within the dots of the timeline.
-
-- 💪&nbsp; **TypeScript Integration**: Benefit from the advantages of [Typescript](https://www.typescriptlang.org/) for enhanced code reliability.
-
-- 🎨&nbsp; **TailwindCSS Styling**: Achieve a sleek and modern design with styling powered by [TailwindCSS](https://tailwindcss.com/). -->
-
-- **Headless UI**: useTreeView hooks provide tree expanded & selected state for easily render tree component
-- **Checkbox**: you can also handle checkbox state
 
 ## Installation
 
@@ -32,13 +19,7 @@ Using [npm](https://npmjs.com/)
 1. Install the package:
 
 ```
-  npm install @henliwu1491/react-tree-node
-```
-
-2. Import css:
-
-```
-import "
+  npm install @henliwu1491/react-tree
 ```
 
 ## Usage
@@ -47,104 +28,81 @@ Example:
 
 ### TreeView
 
-```tsx
-import { TreeView } from '@henliwu1491/react-tree-node';
+```jsx
+import { TreeView } from '@henliwu1491/react-tree';
 
 export default function Tree() {
-  const [expandedId, setExpandedId] = useState([]);
+  const [selectedId] = React.useState(['12']);
+  const [expandedId] = React.useState(['2', '21', '221']);
 
   return (
     <TreeView
       initialState={{ selectedId, expandedId }}
       data={data}
-      idName="id"
-      onExpand={(item) => {
-        setExpandedId((prev) =>
-          prev.length === 0
-            ? [item.value]
-            : prev.indexOf(item.value) === -1
-              ? [...prev, item.value]
-              : prev.filter((id) => id !== item.value)
-        );
+      idName="value"
+      getLabel={(item) => {
+        if (item.type === 'leaf') {
+          return (
+            <div className="flex ">
+              <div>Leaf: {item.label}</div>
+            </div>
+          );
+        }
+        return item.label;
       }}
       icon={{
-        expand: '👉',
-        collapse: '👇',
-        node: '🌲',
-        leaf: '🍃',
+        expand: '▲',
+        collapse: '▼',
+        leaf: '🌱',
+        checked: '☑',
+        unchecked: '☐',
+        indeterminate: '-',
       }}
     />
   );
 }
 ```
 
-### useTreeView
-
-```tsx
-import { useTreeView } from '@henliwu1491/react-tree-node';
-
-function Tree() {
-  const treeProps = useTreeView({
-    initialState,
-    data,
-    idName,
-    leafName,
-    onExpand,
-    onSelect,
-    expandedId,
-    selectedId,
-  });
-
-  const { state } = treeProps;
-
-  const renderNodes = (nodes: TreeNode[]) => {
-    return nodes.map((node, nodeIdx) => (
-      <TreeNode key={nodeIdx} node={node} renderNodes={renderNodes} />
-    ));
-  };
-
-  return (
-    <TreeContext.Provider value={treeProps}>
-      {renderNodes(state.nodes)}
-    </TreeContext.Provider>
-  );
-}
-```
-
 ## `<TreeView /> Props`
-
-Below are the available configuration options for the component:
-
-| Name           | Type       | Description                                                |
-| -------------- | ---------- | ---------------------------------------------------------- |
-| `data`         | `array`    | Raw data                                                   |
-| `idName`       | `string`   | Custom id key for each tree node (default is `id`)         |
-| `leafName`     | `string`   | Custom leaf key for each tree node (default is `leaf`)     |
-| `onExpand`     | `function` | Callback function you can get node item from the parameter |
-| `onSelect`     | `function` | Callback function you can get node item from the parameter |
-| `initialState` | `object`   | default state provided at the first time.                  |
-
-## `useTreeView`
 
 ### Options
 
-| Name           | Type               | Description            |
-| -------------- | ------------------ | ---------------------- |
-| `initialState` | `TreeInitialState` | selectedId, expandedId |
-| `data`         | `TreeRawData[]`    |                        |
-| `idName`       | `string`           |                        |
-| `leafName`     | `string`           |                        |
-| `expandedId`   | `string[]`         |                        |
-| `selectedId`   | `string[]`         |                        |
-| `onExpand`     | `function`         |                        |
-| `onSelect`     | `function`         |                        |
+Below are the available configuration options for the component:
 
-### Instance Properties
+| Name           | Type               | Description                                                                          |
+| -------------- | ------------------ | ------------------------------------------------------------------------------------ |
+| `initialState` | `TreeInitialState` | Optional.                                                                            |
+| `data`         | `TreeRawData[]`    | Required. Your raw tree structure data. (must contain `id`, `label` and `value` key) |
+| `idName`       | `string`           | Optional. Assign a custom id key if you have provided. (default is `id`)             |
+| `onExpand`     | `function`         | Optional. Callback function you can get node item from the parameter.                |
+| `onSelect`     | `function`         | Optional. Callback function you can get node item from the parameter.                |
+| `value`        | `TreeInitialState` | Optional. Control your own state.                                                    |
+| `icon`         | `IconConfig`       | Optional. Provide your custom icon, React.ReactNode only.                            |
+| `getLabel`     | `function`         | Optional. Your own label render function.                                            |
 
-| Name       | Type                         | Description                                  |
-| ---------- | ---------------------------- | -------------------------------------------- |
-| `state`    | `TreeState`                  | selectedId, expandedId, nodes, flattenNodes  |
-| `dispatch` | `React.Dispatch<TreeAction>` | Just a react dispatch function in useReducer |
+### initialState
+
+```ts
+export type TreeInitialState = {
+  expandedId: string[];
+  selectedId: string[];
+};
+```
+
+### data
+
+**`id`, `label`, `value` are required. And if nested data is provided, `children` is also required.**
+
+```ts
+export type TreeRawData = {
+  id: string;
+  label: string;
+  value: string;
+  count?: number;
+  children?: TreeRawData[];
+  [key: string]: any;
+};
+```
 
 ## 🤝Contributing
 

@@ -1,25 +1,26 @@
 import React from 'react';
 import TreeView from '../lib/components/TreeView';
-import '../lib/styles.css';
+import '../lib/index.css';
+// import './custom.css';
 
 const data = [
   {
     label: 'Pet',
     value: '1',
     count: 8,
-    id: 1,
+    id: '1',
     children: [
       {
-        id: 11,
+        id: '11',
         method: 'GET',
-        label: '/api/v1/pet',
+        label: '11',
         value: '11',
       },
       {
-        id: 11,
+        id: '12',
         method: 'PUT',
-        label: '/api/v1/pet',
-        value: '11',
+        label: '12',
+        value: '12',
       },
     ],
   },
@@ -27,27 +28,55 @@ const data = [
     label: 'Store',
     value: '2',
     count: 4,
-    id: 2,
+    id: '2',
     children: [
       {
-        id: 21,
+        id: '21',
         method: 'GET',
-        label: '/api/v1/store',
+        label: '21',
         value: '21',
       },
       {
-        id: 21,
+        id: '22',
         method: 'DELETE',
-        label: '/api/v1/store',
-        value: '21',
+        label: '22',
+        value: '22',
+        children: [
+          {
+            id: '221',
+            method: 'DELETE',
+            label: '221',
+            value: '221',
+          },
+          {
+            id: '222',
+            method: 'DELETE',
+            label: '222',
+            value: '222',
+          },
+          {
+            id: '223',
+            method: 'DELETE',
+            label: '223',
+            value: '223',
+            children: [
+              {
+                id: '2231',
+                method: 'DELETE',
+                label: '2231',
+                value: '2231',
+              },
+            ],
+          },
+        ],
       },
     ],
   },
 ];
 
 export default function Tree() {
-  const [selectedId] = React.useState([]);
-  const [expandedId, setExpandedId] = React.useState(['2', '21']);
+  const [selectedId] = React.useState(['12']);
+  const [expandedId] = React.useState(['2', '21', '221']);
 
   return (
     <TreeView
@@ -57,28 +86,38 @@ export default function Tree() {
       getLabel={(item) => {
         if (item.type === 'leaf') {
           return (
-            <div className="flex align-items-center">
-              <div style={{ width: '80px', border: '1px solid pink' }}>
-                {item.method}
-              </div>
-              <div>{item.label}</div>
+            <div className="flex">
+              <div>Leaf: {item.label}</div>
             </div>
           );
         }
         return item.label;
       }}
-      onExpand={(item) => {
-        setExpandedId((prev) =>
-          prev.length === 0
-            ? [item.value]
-            : prev.indexOf(item.value) === -1
-              ? [...prev, item.value]
-              : prev.filter((id) => id !== item.value)
-        );
-      }}
+      // onExpand={(item) => {
+      //   setExpandedId((prev) =>
+      //     prev.length === 0
+      //       ? [item.value]
+      //       : prev.indexOf(item.value) === -1
+      //         ? [...prev, item.value]
+      //         : prev.filter((id) => id !== item.value)
+      //   );
+      // }}
+      // onSelect={(item) => {
+      //   setSelectedId((prev) =>
+      //     prev.length === 0
+      //       ? [item.value]
+      //       : prev.indexOf(item.value) === -1
+      //         ? [...prev, item.value]
+      //         : prev.filter((id) => id !== item.value)
+      //   );
+      // }}
       icon={{
-        expand: '👉',
-        collapse: '👇',
+        expand: '▲',
+        collapse: '▼',
+        leaf: '🌱',
+        checked: '☑',
+        unchecked: '☐',
+        indeterminate: '-',
       }}
     />
   );
