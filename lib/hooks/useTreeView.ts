@@ -144,13 +144,27 @@ const useTreeView = ({
 
   return {
     state,
-    dispatch,
     initialState,
     data,
     idName,
     leafName,
     onExpand,
     onSelect,
+    setExpand: (id: string) => {
+      dispatch({ type: TreeActionTypes.EXPAND_WITH_ID, payload: id });
+    },
+    setSelect: (id: string) => {
+      dispatch({ type: TreeActionTypes.SELECT_WITH_ID, payload: id });
+    },
+    setSelected: (id: string) => {
+      dispatch({ type: TreeActionTypes.SET_SELECTED, payload: id });
+    },
+    setInitialState: (initialState: TreeInitialState) => {
+      dispatch({
+        type: TreeActionTypes.SET_INITIAL_STATE,
+        payload: initialState,
+      });
+    },
   };
 };
 

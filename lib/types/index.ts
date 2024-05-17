@@ -11,17 +11,16 @@ export type TreeHookProps = {
   data: TreeRawData[];
   idName?: StringTreeNodeKey | 'id';
   leafName?: StringTreeNodeKey | 'leaf';
-  // controlled state
-  expandedId?: string[];
-  selectedId?: string[];
   onExpand?: (node: TreeData) => void;
   onSelect?: (node: TreeData) => void;
-  //
 };
 
 export type TreeHookReturnProps = TreeHookProps & {
   state: TreeState;
-  dispatch: React.Dispatch<TreeAction>;
+  setExpand: (id: string) => void;
+  setSelect: (id: string) => void;
+  setSelected: (id: string) => void;
+  setInitialState: (initialState: TreeInitialState) => void;
 };
 
 export type TreeProps = TreeHookProps & {
@@ -41,15 +40,13 @@ type IconConfig = {
 };
 
 export type TreeContextType = {
-  state: TreeState;
-  dispatch: React.Dispatch<TreeAction>;
   idName?: StringTreeNodeKey;
   leafName?: string;
   onExpand?: (node: TreeData) => void;
   onSelect?: (node: TreeData) => void;
   icon?: IconConfig;
-  getLabel: (node: TreeData) => React.ReactNode;
-};
+  getLabel?: (node: TreeData) => React.ReactNode;
+} & TreeHookReturnProps;
 
 export type TreeInitialState = {
   expandedId: string[];
