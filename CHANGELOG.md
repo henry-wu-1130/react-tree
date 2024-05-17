@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.0.4](https://github.com/henry-wu-1130/react-tree/compare/v0.0.3...v0.0.4) (2024-05-17)
+
+
+### Bug Fixes
+
+* Fix ci config ([e126043](https://github.com/henry-wu-1130/react-tree/commit/e126043805beb8e56efc126f980d292a88a89b27))
+* Remove dispatch from hook return props, add new examples for useTreeView ([48fb7b4](https://github.com/henry-wu-1130/react-tree/commit/48fb7b42ea659bda364f017a456f1adf2e910d3f))
+* Update README & add helpers folder ([0b51306](https://github.com/henry-wu-1130/react-tree/commit/0b51306398c51653e8522340ec69e99f67e675e4))
+
 ## [0.0.3](https://github.com/henry-wu-1130/react-tree/compare/v0.0.2...v0.0.3) (2024-05-14)
 
 
