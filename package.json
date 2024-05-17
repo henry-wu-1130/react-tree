@@ -38,6 +38,7 @@
     "preview": "vite preview",
     "prepare": "husky install",
     "release": "npx commit-and-tag-version && npm run build",
+    "pre-release": "npx commit-and-tag-version -- --prerelease alpha && npm run build",
     "publish": "npm publish --access public"
   },
   "lint-staged": {

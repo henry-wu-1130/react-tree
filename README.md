@@ -6,7 +6,7 @@
 
 React Tree is a tree data structure ui library designed for easily building tree components.
 
-<!-- [Demo](https://stackblitz.com/edit/react-beautiful-timeline?file=src%2FApp.tsx) -->
+[Demo](https://stackblitz.com/edit/vitejs-vite-x4q3p7?file=index.html,src%2FApp.tsx,package.json,src%2Fmain.tsx,package-lock.json&terminal=dev)
 
 **Note: This project is for testing purposes only and is not intended for production use.**
 
@@ -133,8 +133,8 @@ export default function Tree() {
 
 ```jsx
 export default function Tree() {
-  const [selectedId] = React.useState(['12']);
-  const [expandedId] = React.useState(['2', '21', '221']);
+  const [selectedId, setSelectedId] = React.useState(['12']);
+  const [expandedId, setExpandedId] = React.useState(['2', '21', '221']);
 
   return (
     <TreeView

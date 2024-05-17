@@ -1,16 +1,10 @@
-import {
-  useState,
-  useEffect,
-  useContext,
-  useCallback,
-  createContext,
-} from 'react';
+/* eslint-disable react-refresh/only-export-components */
+import { useEffect, useContext, useCallback, createContext } from 'react';
 import useTreeView from '../hooks/useTreeView';
 import {
   type TreeNode,
   TreeContextType,
   TreeNodeKey,
-  TreeActionTypes,
   TreeProps,
 } from '../types';
 import cx from 'clsx';
@@ -22,7 +16,24 @@ const defaultInitialState = {
   nodes: [],
 };
 
-export const TreeContext = createContext<TreeContextType | null>(null);
+const TreeContext = createContext<TreeContextType | null>(null);
+
+export const TreeProvider = ({
+  children,
+  ...props
+}: {
+  children: React.ReactNode;
+} & TreeContextType) => (
+  <TreeContext.Provider value={props}>{children}</TreeContext.Provider>
+);
+
+export const useTreeContext = () => {
+  const context = useContext(TreeContext);
+  if (!context) {
+    throw new Error('useTreeContext must be used within a TreeProvider');
+  }
+  return context;
+};
 
 const TreeNode = ({
   node,
@@ -33,13 +44,15 @@ const TreeNode = ({
 }) => {
   const {
     state: { expandedId, selectedId, flattenNodes },
-    dispatch,
     idName,
     leafName,
     onExpand,
     onSelect,
     icon,
     getLabel,
+    setExpand,
+    setSelect,
+    setSelected,
   } = useContext(TreeContext as React.Context<TreeContextType>);
 
   const id = idName ? node[idName as TreeNodeKey] : node.value + '';
@@ -55,34 +68,19 @@ const TreeNode = ({
   const shouldShowSelectIcon =
     icon?.checked || icon?.unchecked || icon?.indeterminate;
 
-  const [
-    isIndeterminate,
-    // setIsIndeterminate
-  ] = useState(false);
-  const [
-    isAllChecked,
-    //setIsAllChecked
-  ] = useState(false);
-
   const handleExpand = useCallback(() => {
-    dispatch({
-      type: TreeActionTypes.EXPAND_WITH_ID,
-      payload: node.value + '',
-    });
+    setExpand(node.value + '');
     if (typeof onExpand === 'function') {
       onExpand(node);
     }
-  }, [dispatch, node, onExpand]);
+  }, [node, onExpand, setExpand]);
 
   const handleSelect = useCallback(() => {
-    dispatch({
-      type: TreeActionTypes.SELECT_WITH_ID,
-      payload: node.value + '',
-    });
+    setSelect(node.value + '');
     if (typeof onSelect === 'function') {
       onSelect(node);
     }
-  }, [dispatch, node, onSelect]);
+  }, [node, onSelect, setSelect]);
 
   useEffect(() => {
     if (flattenNodes.length) {
@@ -93,21 +91,15 @@ const TreeNode = ({
       );
       const childrenSelected = children.filter((n) => n.isChecked);
       if (children.length > 0) {
-        if (!node.isChecked && childrenSelected.length === children.length) {
-          dispatch({
-            type: TreeActionTypes.SET_SELECTED,
-            payload: node.value + '',
-          });
-        }
-        if (node.isChecked && childrenSelected.length === 0) {
-          dispatch({
-            type: TreeActionTypes.SET_SELECTED,
-            payload: node.value + '',
-          });
+        if (
+          (!node.isChecked && childrenSelected.length === children.length) ||
+          (node.isChecked && childrenSelected.length === 0)
+        ) {
+          setSelected(node.value + '');
         }
       }
     }
-  }, [dispatch, flattenNodes, node.isChecked, node.value]);
+  }, [flattenNodes, node.isChecked, node.value, setSelected]);
 
   return (
     <div
@@ -154,13 +146,11 @@ const TreeNode = ({
             )}
             onClick={handleSelect}
           >
-            {isAllChecked
-              ? icon?.checked
-              : isIndeterminate
-                ? icon?.indeterminate
-                : isSelectedId
-                  ? icon?.checked
-                  : icon?.unchecked}
+            {icon?.checked
+              ? isSelectedId
+                ? icon?.checked
+                : icon?.unchecked
+              : ''}
           </div>
         )}
         <div
@@ -171,7 +161,7 @@ const TreeNode = ({
             handleSelect();
           }}
         >
-          {getLabel(node)}
+          {typeof getLabel === 'function' && getLabel(node)}
         </div>
       </div>
       <div className={cx('flex', 'flex-col', 'react-tree-node--children')}>
@@ -187,27 +177,21 @@ function Tree({
   data,
   idName,
   leafName,
-  // controlled state
-  expandedId = [],
-  selectedId = [],
   onExpand,
   onSelect,
-  //
   icon,
   getLabel = (node) => node.label,
 }: TreeProps): React.ReactNode {
-  const treeProps = useTreeView({
+  const treeMethods = useTreeView({
     initialState,
     data,
     idName,
     leafName,
-    expandedId,
-    selectedId,
     onExpand,
     onSelect,
   });
 
-  const { state, dispatch } = treeProps;
+  const { state, setInitialState } = treeMethods;
 
   const renderNodes = useCallback((nodes: TreeNode[] | []) => {
     return nodes.map((node, nodeIdx) => (
@@ -216,18 +200,13 @@ function Tree({
   }, []);
 
   useEffect(() => {
-    if (value) {
-      dispatch({
-        type: TreeActionTypes.SET_INITIAL_STATE,
-        payload: value,
-      });
-    }
-  }, [dispatch, value]);
+    if (value) setInitialState(value);
+  }, [setInitialState, value]);
 
   return (
-    <TreeContext.Provider value={{ ...treeProps, icon, getLabel }}>
+    <TreeProvider {...treeMethods} icon={icon} getLabel={getLabel}>
       {renderNodes(state.nodes)}
-    </TreeContext.Provider>
+    </TreeProvider>
   );
 }
 
