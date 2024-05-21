@@ -47,7 +47,7 @@ const reducer = (state: TreeState, action: TreeAction): TreeState => {
           .map((node) => node.value + ''),
       };
     }
-    case TreeActionTypes.SELECT_WITH_ID: {
+    case TreeActionTypes.CHECK_NODE_AND_CHILDREN: {
       const nodeHasChildren = !!state.flattenNodes.find(
         (n) => n.value + '' === action.payload + ''
       )?.children?.length;
@@ -74,7 +74,7 @@ const reducer = (state: TreeState, action: TreeAction): TreeState => {
           .map((node) => node.value + ''),
       };
     }
-    case TreeActionTypes.SET_SELECTED: {
+    case TreeActionTypes.CHECK_SINGLE_NODE: {
       const nodes = getSelectedNodes(
         state.nodes,
         state.selectedId.indexOf(action.payload + '') !== -1
@@ -143,7 +143,7 @@ const useTreeView = ({
   );
 
   return {
-    state,
+    ...state,
     initialState,
     data,
     idName,
@@ -153,11 +153,11 @@ const useTreeView = ({
     setExpand: (id: string) => {
       dispatch({ type: TreeActionTypes.EXPAND_WITH_ID, payload: id });
     },
-    setSelect: (id: string) => {
-      dispatch({ type: TreeActionTypes.SELECT_WITH_ID, payload: id });
+    checkNodeAndChildren: (id: string) => {
+      dispatch({ type: TreeActionTypes.CHECK_NODE_AND_CHILDREN, payload: id });
     },
-    setSelected: (id: string) => {
-      dispatch({ type: TreeActionTypes.SET_SELECTED, payload: id });
+    checkSingleNode: (id: string) => {
+      dispatch({ type: TreeActionTypes.CHECK_SINGLE_NODE, payload: id });
     },
     setInitialState: (initialState: TreeInitialState) => {
       dispatch({

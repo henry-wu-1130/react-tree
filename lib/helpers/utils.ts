@@ -8,7 +8,6 @@ export const getLeafNodes = (data: TreeData[]) => {
       getLeafNodes(d.children);
     }
   });
-
   return data;
 };
 

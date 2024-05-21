@@ -138,7 +138,7 @@ export default function Tree() {
 
   return (
     <TreeView
-      initialState={{ selectedId, expandedId }}
+      value={{ selectedId, expandedId }}
       data={data}
       idName="value"
       onExpand={(item) => {

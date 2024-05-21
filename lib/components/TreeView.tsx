@@ -43,7 +43,9 @@ const TreeNode = ({
   renderNodes: (nodes: TreeNode[]) => React.ReactNode;
 }) => {
   const {
-    state: { expandedId, selectedId, flattenNodes },
+    expandedId,
+    selectedId,
+    flattenNodes,
     idName,
     leafName,
     onExpand,
@@ -51,8 +53,8 @@ const TreeNode = ({
     icon,
     getLabel,
     setExpand,
-    setSelect,
-    setSelected,
+    checkNodeAndChildren,
+    checkSingleNode,
   } = useContext(TreeContext as React.Context<TreeContextType>);
 
   const id = idName ? node[idName as TreeNodeKey] : node.value + '';
@@ -76,11 +78,11 @@ const TreeNode = ({
   }, [node, onExpand, setExpand]);
 
   const handleSelect = useCallback(() => {
-    setSelect(node.value + '');
+    checkNodeAndChildren(node.value + '');
     if (typeof onSelect === 'function') {
       onSelect(node);
     }
-  }, [node, onSelect, setSelect]);
+  }, [node, onSelect, checkNodeAndChildren]);
 
   useEffect(() => {
     if (flattenNodes.length) {
@@ -95,11 +97,11 @@ const TreeNode = ({
           (!node.isChecked && childrenSelected.length === children.length) ||
           (node.isChecked && childrenSelected.length === 0)
         ) {
-          setSelected(node.value + '');
+          checkSingleNode(node.value + '');
         }
       }
     }
-  }, [flattenNodes, node.isChecked, node.value, setSelected]);
+  }, [flattenNodes, node.isChecked, node.value, checkSingleNode]);
 
   return (
     <div
@@ -191,7 +193,7 @@ function Tree({
     onSelect,
   });
 
-  const { state, setInitialState } = treeMethods;
+  const { nodes, setInitialState } = treeMethods;
 
   const renderNodes = useCallback((nodes: TreeNode[] | []) => {
     return nodes.map((node, nodeIdx) => (
@@ -205,7 +207,7 @@ function Tree({
 
   return (
     <TreeProvider {...treeMethods} icon={icon} getLabel={getLabel}>
-      {renderNodes(state.nodes)}
+      {renderNodes(nodes)}
     </TreeProvider>
   );
 }

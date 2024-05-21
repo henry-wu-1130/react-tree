@@ -1,4 +1,3 @@
-import React from 'react';
 import TreeView from '../lib/components/TreeView';
 import '../lib/index.css';
 // import './custom.css';
@@ -73,12 +72,9 @@ const data = [
 ];
 
 export default function Tree() {
-  const [selectedId] = React.useState(['12']);
-  const [expandedId] = React.useState(['2', '21', '221']);
-
   return (
     <TreeView
-      initialState={{ selectedId, expandedId }}
+      initialState={{ selectedId: ['12'], expandedId: ['2', '21', '221'] }}
       data={data}
       idName="value"
       // getLabel={(item) => {
