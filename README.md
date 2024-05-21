@@ -176,7 +176,6 @@ Below are the available configuration options for the component:
 | -------------- | ------------------ | ------------------------------------------------------------------------------------ | ------- |
 | `initialState` | `TreeInitialState` | Optional.                                                                            |         |
 | `data`         | `TreeRawData[]`    | Required. Your raw tree structure data. (must contain `id`, `label` and `value` key) |         |
-| `idName`       | `string`           | Optional. Assign a custom id key if you have provided. (default is `id`)             | `id`    |
 | `onExpand`     | `function`         | Optional. Callback function you can get node item from the parameter.                |         |
 | `onSelect`     | `function`         | Optional. Callback function you can get node item from the parameter.                |         |
 | `value`        | `TreeInitialState` | Optional. Control your own state.                                                    |         |

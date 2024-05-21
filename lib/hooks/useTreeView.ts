@@ -33,7 +33,9 @@ const reducer = (state: TreeState, action: TreeAction): TreeState => {
       const nodes = getExpandedNodes(
         state.nodes,
         state.expandedId.indexOf(action.payload + '') !== -1
-          ? state.expandedId.filter((id) => id !== action.payload + '')
+          ? state.expandedId.filter(
+              (expandId) => expandId !== action.payload + ''
+            )
           : [...state.expandedId, action.payload + '']
       );
       const flattenNodes = getFlattenNodes(nodes);
@@ -61,7 +63,9 @@ const reducer = (state: TreeState, action: TreeAction): TreeState => {
               action.payload + ''
             )
           : state.selectedId.indexOf(action.payload + '') !== -1
-            ? state.selectedId.filter((id) => id !== action.payload + '')
+            ? state.selectedId.filter(
+                (checkId) => checkId !== action.payload + ''
+              )
             : [...state.selectedId, action.payload + '']
       );
       const flattenNodes = getFlattenNodes(nodes);
@@ -78,7 +82,9 @@ const reducer = (state: TreeState, action: TreeAction): TreeState => {
       const nodes = getSelectedNodes(
         state.nodes,
         state.selectedId.indexOf(action.payload + '') !== -1
-          ? state.selectedId.filter((id) => id !== action.payload + '')
+          ? state.selectedId.filter(
+              (checkId) => checkId !== action.payload + ''
+            )
           : [...state.selectedId, action.payload + '']
       );
       const flattenNodes = getFlattenNodes(nodes);
@@ -132,8 +138,6 @@ const getDefaultState = ({
 const useTreeView = ({
   initialState = defaultInitialState,
   data,
-  idName = 'id',
-  leafName = 'leaf',
   onExpand,
   onSelect,
 }: TreeHookProps): TreeHookReturnProps => {
@@ -146,18 +150,19 @@ const useTreeView = ({
     ...state,
     initialState,
     data,
-    idName,
-    leafName,
     onExpand,
     onSelect,
-    setExpand: (id: string) => {
-      dispatch({ type: TreeActionTypes.EXPAND_WITH_ID, payload: id });
+    setExpand: (expandId: string) => {
+      dispatch({ type: TreeActionTypes.EXPAND_WITH_ID, payload: expandId });
     },
-    checkNodeAndChildren: (id: string) => {
-      dispatch({ type: TreeActionTypes.CHECK_NODE_AND_CHILDREN, payload: id });
+    checkNodeAndChildren: (checkId: string) => {
+      dispatch({
+        type: TreeActionTypes.CHECK_NODE_AND_CHILDREN,
+        payload: checkId,
+      });
     },
-    checkSingleNode: (id: string) => {
-      dispatch({ type: TreeActionTypes.CHECK_SINGLE_NODE, payload: id });
+    checkSingleNode: (checkId: string) => {
+      dispatch({ type: TreeActionTypes.CHECK_SINGLE_NODE, payload: checkId });
     },
     setInitialState: (initialState: TreeInitialState) => {
       dispatch({

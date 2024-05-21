@@ -65,18 +65,18 @@ export const getSelectedNodes = (
 export const getSelectedIdWithChildren = (
   nodes: TreeData[],
   selectedIds: TreeData['value'][],
-  id: string,
+  checkId: string,
   set: Set<string | number> = new Set(selectedIds)
 ): TreeData['value'][] => {
   nodes.forEach((d) => {
-    if ((d.value + '').startsWith(id)) {
-      if (selectedIds.indexOf(id) === -1) {
+    if ((d.value + '').startsWith(checkId)) {
+      if (selectedIds.indexOf(checkId) === -1) {
         set.add(d.value + '');
       } else {
         set.delete(d.value + '');
       }
       if (d.children && d.children.length) {
-        getSelectedIdWithChildren(d.children, selectedIds, id, set);
+        getSelectedIdWithChildren(d.children, selectedIds, checkId, set);
       }
     }
   });

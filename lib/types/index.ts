@@ -9,8 +9,6 @@ export enum TreeActionTypes {
 export type TreeHookProps = {
   initialState?: TreeInitialState;
   data: TreeRawData[];
-  idName?: StringTreeNodeKey | 'id';
-  leafName?: StringTreeNodeKey | 'leaf';
   onExpand?: (node: TreeData) => void;
   onSelect?: (node: TreeData) => void;
 };
@@ -40,8 +38,6 @@ type IconConfig = {
 };
 
 export type TreeContextType = {
-  idName?: StringTreeNodeKey;
-  leafName?: string;
   onExpand?: (node: TreeData) => void;
   onSelect?: (node: TreeData) => void;
   icon?: IconConfig;
@@ -101,8 +97,6 @@ export type TreeNode = {
   value: string | number;
   type?: string;
   level?: number;
-  idName?: StringTreeNodeKey;
-  leafName?: string;
   children?: TreeNode[];
   isChecked?: boolean;
   isExpanded?: boolean;
@@ -110,9 +104,3 @@ export type TreeNode = {
 };
 
 export type TreeNodeKey = keyof TreeNode;
-
-type StringKey<T> = {
-  [K in keyof T]: T[K] extends string ? K : never;
-}[keyof T];
-
-type StringTreeNodeKey = StringKey<TreeNode>;

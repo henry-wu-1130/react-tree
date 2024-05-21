@@ -1,12 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import { useEffect, useContext, useCallback, createContext } from 'react';
 import useTreeView from '../hooks/useTreeView';
-import {
-  type TreeNode,
-  TreeContextType,
-  TreeNodeKey,
-  TreeProps,
-} from '../types';
+import { type TreeNode, TreeContextType, TreeProps } from '../types';
 import cx from 'clsx';
 
 const defaultInitialState = {
@@ -46,8 +41,6 @@ const TreeNode = ({
     expandedId,
     selectedId,
     flattenNodes,
-    idName,
-    leafName,
     onExpand,
     onSelect,
     icon,
@@ -57,12 +50,10 @@ const TreeNode = ({
     checkSingleNode,
   } = useContext(TreeContext as React.Context<TreeContextType>);
 
-  const id = idName ? node[idName as TreeNodeKey] : node.value + '';
-
   const isRoot = node.level === 0;
-  const isLeaf = leafName ? node.type === leafName : node.type === 'leaf';
-  const isExpandedId = expandedId.indexOf(id) !== -1;
-  const isSelectedId = selectedId.includes(id);
+  const isLeaf = node.type === 'leaf';
+  const isExpandedId = expandedId.indexOf(node.value + '') !== -1;
+  const isSelectedId = selectedId.includes(node.value + '');
 
   const shouldShowExpand = !isLeaf;
   const shouldShowExpandContent =
@@ -105,7 +96,7 @@ const TreeNode = ({
 
   return (
     <div
-      id={id}
+      id={node.value + ''}
       className={cx(
         'flex',
         'flex-col',
@@ -177,8 +168,6 @@ function Tree({
   initialState = defaultInitialState,
   value,
   data,
-  idName,
-  leafName,
   onExpand,
   onSelect,
   icon,
@@ -187,8 +176,6 @@ function Tree({
   const treeMethods = useTreeView({
     initialState,
     data,
-    idName,
-    leafName,
     onExpand,
     onSelect,
   });
