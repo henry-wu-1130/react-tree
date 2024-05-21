@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.0.6](https://github.com/henry-wu-1130/react-tree/compare/v0.0.5...v0.0.6) (2024-05-21)
+
+
+### Bug Fixes
+
+* Remove idName, leafName props ([80dde5d](https://github.com/henry-wu-1130/react-tree/commit/80dde5df3334d77f9734d139d0f26e77d226c86f))
+
 ## [0.0.5](https://github.com/henry-wu-1130/react-tree/compare/v0.0.4...v0.0.5) (2024-05-21)
 
 
