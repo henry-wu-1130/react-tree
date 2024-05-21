@@ -8,13 +8,12 @@ export const getLeafNodes = (data: TreeData[]) => {
       getLeafNodes(d.children);
     }
   });
-
   return data;
 };
 
 export const getNormalizedNodes = (data: TreeRawData[], level = 0) => {
   data.forEach((d) => {
-    Object.assign(d, { level });
+    Object.assign(d, { id: d.id + '', value: d.value + '', level });
     if (d.children && !!d.children.length) {
       getNormalizedNodes(d.children, level + 1);
     }
@@ -67,7 +66,7 @@ export const getSelectedIdWithChildren = (
   nodes: TreeData[],
   selectedIds: TreeData['value'][],
   id: string,
-  set: Set<string> = new Set(selectedIds)
+  set: Set<string | number> = new Set(selectedIds)
 ): TreeData['value'][] => {
   nodes.forEach((d) => {
     if ((d.value + '').startsWith(id)) {

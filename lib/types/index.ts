@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export enum TreeActionTypes {
   EXPAND_WITH_ID = 'EXPAND_WITH_ID',
-  SELECT_WITH_ID = 'SELECT_WITH_ID',
-  SET_SELECTED = 'SET_SELECTED',
+  CHECK_NODE_AND_CHILDREN = 'CHECK_NODE_AND_CHILDREN',
+  CHECK_SINGLE_NODE = 'CHECK_SINGLE_NODE',
   SET_INITIAL_STATE = 'SET_INITIAL_STATE',
 }
 
@@ -15,13 +15,13 @@ export type TreeHookProps = {
   onSelect?: (node: TreeData) => void;
 };
 
-export type TreeHookReturnProps = TreeHookProps & {
-  state: TreeState;
-  setExpand: (id: string) => void;
-  setSelect: (id: string) => void;
-  setSelected: (id: string) => void;
-  setInitialState: (initialState: TreeInitialState) => void;
-};
+export type TreeHookReturnProps = TreeHookProps &
+  TreeState & {
+    setExpand: (id: string) => void;
+    checkNodeAndChildren: (id: string) => void;
+    checkSingleNode: (id: string) => void;
+    setInitialState: (initialState: TreeInitialState) => void;
+  };
 
 export type TreeProps = TreeHookProps & {
   icon?: IconConfig;
@@ -64,11 +64,11 @@ export type TreeAction =
       payload: TreeData['value'];
     }
   | {
-      type: TreeActionTypes.SELECT_WITH_ID;
+      type: TreeActionTypes.CHECK_NODE_AND_CHILDREN;
       payload: TreeData['value'];
     }
   | {
-      type: TreeActionTypes.SET_SELECTED;
+      type: TreeActionTypes.CHECK_SINGLE_NODE;
       payload: TreeData['value'];
     }
   | {
@@ -81,9 +81,9 @@ export type TreeAction =
     };
 
 export type TreeRawData = {
-  id: string;
+  id: string | number;
   label: string;
-  value: string;
+  value: string | number;
   children?: TreeRawData[];
   isChecked?: boolean;
   isExpanded?: boolean;
@@ -96,9 +96,9 @@ export type TreeData = TreeRawData & {
 };
 
 export type TreeNode = {
-  id: string;
+  id: string | number;
   label: string;
-  value: string;
+  value: string | number;
   type?: string;
   level?: number;
   idName?: StringTreeNodeKey;
