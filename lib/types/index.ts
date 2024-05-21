@@ -81,9 +81,9 @@ export type TreeAction =
     };
 
 export type TreeRawData = {
-  id: string;
+  id: string | number;
   label: string;
-  value: string;
+  value: string | number;
   children?: TreeRawData[];
   isChecked?: boolean;
   isExpanded?: boolean;
@@ -96,9 +96,9 @@ export type TreeData = TreeRawData & {
 };
 
 export type TreeNode = {
-  id: string;
+  id: string | number;
   label: string;
-  value: string;
+  value: string | number;
   type?: string;
   level?: number;
   idName?: StringTreeNodeKey;

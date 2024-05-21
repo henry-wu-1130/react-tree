@@ -123,7 +123,7 @@ export default function TreeWithHook() {
 
   return (
     <TreeProvider {...treeMethods}>
-      {renderNodes(treeMethods.state.nodes)}
+      {renderNodes(treeMethods.nodes)}
     </TreeProvider>
   );
 }
