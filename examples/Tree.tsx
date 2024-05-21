@@ -74,9 +74,8 @@ const data = [
 export default function Tree() {
   return (
     <TreeView
-      initialState={{ selectedId: ['12'], expandedId: ['2', '21', '221'] }}
+      initialState={{ selectedId: [], expandedId: [] }}
       data={data}
-      idName="value"
       // getLabel={(item) => {
       //   if (item.type === 'leaf') {
       //     return (
@@ -108,10 +107,10 @@ export default function Tree() {
       icon={{
         expand: '▲',
         collapse: '▼',
-        leaf: '🌱',
-        checked: '☑',
-        unchecked: '☐',
-        indeterminate: '-',
+        // leaf: '🌱',
+        // checked: '☑',
+        // unchecked: '☐',
+        // indeterminate: '-',
       }}
     />
   );
