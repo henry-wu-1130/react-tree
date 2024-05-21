@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.0.5](https://github.com/henry-wu-1130/react-tree/compare/v0.0.4...v0.0.5) (2024-05-21)
+
+
+### Bug Fixes
+
+* value & id properties support for number type ([0d9504e](https://github.com/henry-wu-1130/react-tree/commit/0d9504e99af6dd6ae549aebdc224244437613137))
+
 ## [0.0.4](https://github.com/henry-wu-1130/react-tree/compare/v0.0.3...v0.0.4) (2024-05-17)
 
 
