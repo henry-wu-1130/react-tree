@@ -100,8 +100,13 @@ const reducer = (state: TreeState, action: TreeAction): TreeState => {
     case TreeActionTypes.SET_INITIAL_STATE:
       return {
         ...state,
-        expandedId: (action.payload as TreeInitialState).expandedId,
-        selectedId: (action.payload as TreeInitialState).selectedId,
+        expandedId:
+          action.payload && (action.payload as TreeInitialState).expandedId
+            ? (action.payload as TreeInitialState).expandedId
+            : state.expandedId,
+        selectedId: (action.payload as TreeInitialState).selectedId
+          ? (action.payload as TreeInitialState).selectedId
+          : state.selectedId,
       };
     default:
       throw new Error(`None exist action type: ${action.type}`);
@@ -143,7 +148,13 @@ const useTreeView = ({
 }: TreeHookProps): TreeHookReturnProps => {
   const [state, dispatch] = useReducer(
     reducer,
-    getDefaultState({ initialState, data })
+    getDefaultState({
+      initialState: {
+        expandedId: initialState.expandedId || [],
+        selectedId: initialState.selectedId || [],
+      },
+      data,
+    })
   );
 
   return {
@@ -164,7 +175,10 @@ const useTreeView = ({
     checkSingleNode: (checkId: string) => {
       dispatch({ type: TreeActionTypes.CHECK_SINGLE_NODE, payload: checkId });
     },
-    setInitialState: (initialState: TreeInitialState) => {
+    setInitialState: (initialState: {
+      expandedId?: string[] | undefined | null;
+      selectedId?: string[] | undefined | null;
+    }) => {
       dispatch({
         type: TreeActionTypes.SET_INITIAL_STATE,
         payload: initialState,

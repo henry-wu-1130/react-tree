@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import TreeView from '../lib/components/TreeView';
 import '../lib/index.css';
 // import './custom.css';
@@ -72,38 +73,30 @@ const data = [
 ];
 
 export default function Tree() {
+  const [selectedId, setSelectedId] = useState('');
+
   return (
     <TreeView
-      initialState={{ selectedId: [], expandedId: [] }}
+      value={{ selectedId: selectedId ? [selectedId] : [] }}
       data={data}
-      // getLabel={(item) => {
-      //   if (item.type === 'leaf') {
-      //     return (
-      //       <div className="flex">
-      //         <div>Leaf: {item.label}</div>
-      //       </div>
-      //     );
-      //   }
-      //   return item.label;
-      // }}
-      // onExpand={(item) => {
-      //   setExpandedId((prev) =>
-      //     prev.length === 0
-      //       ? [item.value]
-      //       : prev.indexOf(item.value) === -1
-      //         ? [...prev, item.value]
-      //         : prev.filter((id) => id !== item.value)
-      //   );
-      // }}
-      // onSelect={(item) => {
-      //   setSelectedId((prev) =>
-      //     prev.length === 0
-      //       ? [item.value]
-      //       : prev.indexOf(item.value) === -1
-      //         ? [...prev, item.value]
-      //         : prev.filter((id) => id !== item.value)
-      //   );
-      // }}
+      getLabel={(item) => {
+        if (item.type === 'leaf') {
+          return (
+            <div
+              className="flex"
+              onClick={() => setSelectedId(item.value + '')}
+              style={{
+                width: '100%',
+                backgroundColor:
+                  selectedId === item.value + '' ? 'lightblue' : 'white',
+              }}
+            >
+              <div>Leaf: {item.label}</div>
+            </div>
+          );
+        }
+        return item.label;
+      }}
       icon={{
         expand: '▲',
         collapse: '▼',

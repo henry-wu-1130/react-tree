@@ -7,7 +7,10 @@ export enum TreeActionTypes {
 }
 
 export type TreeHookProps = {
-  initialState?: TreeInitialState;
+  initialState?: {
+    selectedId?: string[] | undefined | null;
+    expandedId?: string[] | undefined | null;
+  };
   data: TreeRawData[];
   onExpand?: (node: TreeData) => void;
   onSelect?: (node: TreeData) => void;
@@ -18,13 +21,19 @@ export type TreeHookReturnProps = TreeHookProps &
     setExpand: (id: string) => void;
     checkNodeAndChildren: (id: string) => void;
     checkSingleNode: (id: string) => void;
-    setInitialState: (initialState: TreeInitialState) => void;
+    setInitialState: (initialState: {
+      selectedId?: string[] | undefined | null;
+      expandedId?: string[] | undefined | null;
+    }) => void;
   };
 
 export type TreeProps = TreeHookProps & {
   icon?: IconConfig;
   getLabel?: (node: TreeData) => React.ReactNode;
-  value?: TreeInitialState;
+  value?: {
+    selectedId?: string[] | undefined | null;
+    expandedId?: string[] | undefined | null;
+  };
 };
 
 type IconConfig = {
@@ -69,11 +78,14 @@ export type TreeAction =
     }
   | {
       type: TreeActionTypes.SET_INITIAL_STATE;
-      payload: TreeInitialState;
+      payload: {
+        selectedId?: string[] | undefined | null;
+        expandedId?: string[] | undefined | null;
+      };
     }
   | {
       type: string;
-      payload: string;
+      payload: unknown;
     };
 
 export type TreeRawData = {

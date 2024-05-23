@@ -15,6 +15,10 @@
   background-color: #ccc;
 }
 
+.react-tree-label-container--leaf {
+  cursor: pointer;
+}
+
 .react-tree-icon-container {
   height: 20px;
   width: 20px;

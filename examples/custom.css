@@ -22,3 +22,8 @@
   padding-left: 9.5px;
   border-left: 1px solid burlywood;
 }
+
+.react-tree-label-container--leaf--active {
+  background-color: lightblue;
+  cursor: pointer;
+}
