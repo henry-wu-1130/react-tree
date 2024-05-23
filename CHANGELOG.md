@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.0.7](https://github.com/henry-wu-1130/react-tree/compare/v0.0.6...v0.0.7) (2024-05-23)
+
+
+### Bug Fixes
+
+* Make useEffect trigger by deep compare, update initialState and value type to optional ([e88b789](https://github.com/henry-wu-1130/react-tree/commit/e88b789e3835533007b0d54e6951889e6209be2b))
+
 ## [0.0.6](https://github.com/henry-wu-1130/react-tree/compare/v0.0.5...v0.0.6) (2024-05-21)
 
 
