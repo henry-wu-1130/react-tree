@@ -1,5 +1,11 @@
 /* eslint-disable react-refresh/only-export-components */
-import { useEffect, useContext, useCallback, createContext } from 'react';
+import {
+  useEffect,
+  useContext,
+  useCallback,
+  useRef,
+  createContext,
+} from 'react';
 import useTreeView from '../hooks/useTreeView';
 import { type TreeNode, TreeContextType, TreeProps } from '../types';
 import cx from 'clsx';
@@ -108,7 +114,8 @@ const TreeNode = ({
           'flex',
           'items-center',
           'react-tree-label-container',
-          isLeaf ? 'react-tree-label-container--leaf' : ''
+          isLeaf ? 'react-tree-label-container--leaf' : '',
+          isSelectedId ? 'react-tree-label-container--leaf--active' : ''
         )}
       >
         {(!isLeaf || (isLeaf && !!icon?.leaf)) && (
@@ -147,7 +154,7 @@ const TreeNode = ({
           </div>
         )}
         <div
-          className={cx('react-tree-label')}
+          className={cx('react-tree-label w-full', 'cursor-pointer')}
           title={node.label}
           onClick={(e) => {
             e.stopPropagation();
@@ -173,6 +180,7 @@ function Tree({
   icon,
   getLabel = (node) => node.label,
 }: TreeProps): React.ReactNode {
+  const previousValue = useRef(value);
   const treeMethods = useTreeView({
     initialState,
     data,
@@ -189,7 +197,13 @@ function Tree({
   }, []);
 
   useEffect(() => {
-    if (value) setInitialState(value);
+    if (!!value && previousValue.current !== value) {
+      setInitialState({
+        expandedId: value.expandedId,
+        selectedId: value.selectedId,
+      });
+      previousValue.current = value;
+    }
   }, [setInitialState, value]);
 
   return (
