@@ -140,7 +140,6 @@ export default function Tree() {
     <TreeView
       value={{ selectedId, expandedId }}
       data={data}
-      idName="value"
       onExpand={(item) => {
         setExpandedId((prev) =>
           prev.length === 0
@@ -165,6 +164,33 @@ export default function Tree() {
 ```
 
 </details>
+
+## useTreeView Props
+
+### Options
+
+Below are the available configuration options for the hook:
+
+| Name           | Type               | Description                                                                          | Default |
+| -------------- | ------------------ | ------------------------------------------------------------------------------------ | ------- |
+| `initialState` | `TreeInitialState` | Optional.                                                                            |         |
+| `data`         | `TreeRawData[]`    | Required. Your raw tree structure data. (must contain `id`, `label` and `value` key) |         |
+| `onExpand`     | `function`         | Optional. Callback function you can get node item from the parameter.                |         |
+| `onSelect`     | `function`         | Optional. Callback function you can get node item from the parameter.                |         |
+
+### Instance
+
+| Name                   | Type                         | Description | Default |
+| ---------------------- | ---------------------------- | ----------- | ------- |
+| `expandedId`           | `string[]`                   |             |         |
+| `selectedId`           | `string[]`                   |             |         |
+| `data`                 | `TreeRawData[]`              |             |         |
+| `onExpand`             | `function`                   |             |         |
+| `onSelect`             | `function`                   |             |         |
+| `setExpand`            | `(string) => void`           |             |         |
+| `checkNodeAndChildren` | `(string) => void`           |             |         |
+| `checkSingleNode`      | `(string) => void`           |             |         |
+| `setInitialState`      | `(TreeInitialState) => void` |             |         |
 
 ## `<TreeView />` Props
 
