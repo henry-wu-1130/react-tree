@@ -3,3 +3,4 @@ import TreeView from './components/TreeView';
 import './index.css';
 
 export { useTreeView, TreeView };
+export * from './helpers/utils';
