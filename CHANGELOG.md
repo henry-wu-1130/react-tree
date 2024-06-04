@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.0.8](https://github.com/henry-wu-1130/react-tree/compare/v0.0.7...v0.0.8) (2024-06-04)
+
+
+### Features
+
+* Provide helpers function ([f72424b](https://github.com/henry-wu-1130/react-tree/commit/f72424b48f4518ee769626b4ad50e2db570210ac))
+
 ## [0.0.7](https://github.com/henry-wu-1130/react-tree/compare/v0.0.6...v0.0.7) (2024-05-23)
 
 
