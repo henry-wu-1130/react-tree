@@ -1,11 +1,13 @@
 import { TreeRawData, TreeData } from '../types';
 
-export const getLeafNodes = (data: TreeData[]) => {
+export const getLeafNodes = (data: TreeData[], leafKey: string) => {
   data.forEach((d) => {
     if (!d.children || !d.children.length) {
-      Object.assign(d, { type: 'leaf' });
+      if (d.type === leafKey) {
+        Object.assign(d, { type: leafKey ? leafKey : 'leaf' });
+      }
     } else {
-      getLeafNodes(d.children);
+      getLeafNodes(d.children, leafKey);
     }
   });
   return data;

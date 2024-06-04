@@ -116,13 +116,18 @@ const reducer = (state: TreeState, action: TreeAction): TreeState => {
 const getDefaultState = ({
   initialState,
   data,
+  leafKey,
 }: {
   initialState: TreeInitialState;
   data: TreeRawData[];
+  leafKey: string;
 }): TreeState => {
   const nodes = getSelectedNodes(
     getExpandedNodes(
-      getLeafNodes(getNormalizedNodes(JSON.parse(JSON.stringify(data)))),
+      getLeafNodes(
+        getNormalizedNodes(JSON.parse(JSON.stringify(data))),
+        leafKey
+      ),
       initialState.expandedId || []
     ),
     initialState.selectedId || []
@@ -145,6 +150,7 @@ const useTreeView = ({
   data,
   onExpand,
   onSelect,
+  leafKey = 'leaf',
 }: TreeHookProps): TreeHookReturnProps => {
   const [state, dispatch] = useReducer(
     reducer,
@@ -154,6 +160,7 @@ const useTreeView = ({
         selectedId: initialState.selectedId || [],
       },
       data,
+      leafKey,
     })
   );
 

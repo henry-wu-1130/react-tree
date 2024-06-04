@@ -51,13 +51,14 @@ const TreeNode = ({
     onSelect,
     icon,
     getLabel,
+    leafKey,
     setExpand,
     checkNodeAndChildren,
     checkSingleNode,
   } = useContext(TreeContext as React.Context<TreeContextType>);
 
   const isRoot = node.level === 0;
-  const isLeaf = node.type === 'leaf';
+  const isLeaf = leafKey ? node.type === leafKey : node.type === 'leaf';
   const isExpandedId = expandedId.indexOf(node.value + '') !== -1;
   const isSelectedId = selectedId.includes(node.value + '');
 
@@ -133,7 +134,7 @@ const TreeNode = ({
                 ? icon?.expand
                 : icon?.collapse
               : null}
-            {node.type === 'leaf' && icon?.leaf && icon?.leaf}
+            {isLeaf && icon?.leaf}
           </div>
         )}
         {shouldShowSelectIcon && (
@@ -179,6 +180,7 @@ function Tree({
   onSelect,
   icon,
   getLabel = (node) => node.label,
+  leafKey,
 }: TreeProps): React.ReactNode {
   const previousValue = useRef(value);
   const treeMethods = useTreeView({
@@ -186,6 +188,7 @@ function Tree({
     data,
     onExpand,
     onSelect,
+    leafKey: leafKey ? leafKey : 'leaf',
   });
 
   const { nodes, setInitialState } = treeMethods;
@@ -207,7 +210,12 @@ function Tree({
   }, [setInitialState, value]);
 
   return (
-    <TreeProvider {...treeMethods} icon={icon} getLabel={getLabel}>
+    <TreeProvider
+      {...treeMethods}
+      icon={icon}
+      getLabel={getLabel}
+      leafKey={leafKey}
+    >
       {renderNodes(nodes)}
     </TreeProvider>
   );
