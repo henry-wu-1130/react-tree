@@ -63,7 +63,7 @@ const TreeNode = ({
 
   const shouldShowExpand = !isLeaf;
   const shouldShowExpandContent =
-    isExpandedId && !!node.children && node.children.length;
+    isExpandedId && !!node.children && !!node.children.length;
   const shouldShowSelectIcon =
     icon?.checked || icon?.unchecked || icon?.indeterminate;
 
