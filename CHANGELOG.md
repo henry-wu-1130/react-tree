@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.0.9](https://github.com/henry-wu-1130/react-tree/compare/v0.0.8...v0.0.9) (2024-06-04)
+
+
+### Bug Fixes
+
+* Fix all expandedId state error with 0 ([e947eb4](https://github.com/henry-wu-1130/react-tree/commit/e947eb45b4ac7890724be30afba093e7eda8eac1))
+
 ## [0.0.8](https://github.com/henry-wu-1130/react-tree/compare/v0.0.7...v0.0.8) (2024-06-04)
 
 
