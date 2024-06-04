@@ -177,6 +177,7 @@ Below are the available configuration options for the hook:
 | `data`         | `TreeRawData[]`    | Required. Your raw tree structure data. (must contain `id`, `label` and `value` key) |         |
 | `onExpand`     | `function`         | Optional. Callback function you can get node item from the parameter.                |         |
 | `onSelect`     | `function`         | Optional. Callback function you can get node item from the parameter.                |         |
+| `leafKey`      | `string`           | Optional. Customized leaf node.                                                      | 'leaf'  |
 
 ### Instance
 
@@ -207,6 +208,7 @@ Below are the available configuration options for the component:
 | `value`        | `TreeInitialState` | Optional. Control your own state.                                                    |         |
 | `icon`         | `IconConfig`       | Optional. Provide your custom icon, React.ReactNode only.                            |         |
 | `getLabel`     | `function`         | Optional. Your own label render function.                                            |         |
+| `leafKey`      | `string`           | Optional. Customized leaf node.                                                      | 'leaf'  |
 
 ### initialState
 
@@ -230,6 +232,17 @@ export type TreeRawData = {
   [key: string]: any;
 };
 ```
+
+## Helper functions
+
+| Name                        | Type       | Description                                                                                                                               | Default |
+| --------------------------- | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `getLeafNodes`              | `function` | `(data: TreeData[], leafkey?: string) => TreeData[]`                                                                                      |         |
+| `getNormalizedNodes`        | `function` | `(data: TreeRawData[], level = 0) => TreeRawData[]`                                                                                       |         |
+| `getFlattenNodes`           | `function` | `(data: TreeRawData[]) => TreeRawData[]`                                                                                                  |         |
+| `getExpandedNodes`          | `function` | `(nodes: TreeData[], expandedId: TreeData['value'][]) => TreeData[]`                                                                      |         |
+| `getSelectedNodes`          | `function` | `(nodes: TreeData[], selectedId: TreeData['value'][]) => TreeData[]`                                                                      |         |
+| `getSelectedIdWithChildren` | `function` | `(nodes: TreeData[], selectedIds: TreeData['value'][], checkId: string, set: Set<string or number> = new Set(selectedIds)) => TreeData[]` |         |
 
 ## 🤝Contributing
 

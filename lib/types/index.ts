@@ -14,6 +14,7 @@ export type TreeHookProps = {
   data: TreeRawData[];
   onExpand?: (node: TreeData) => void;
   onSelect?: (node: TreeData) => void;
+  leafKey?: string;
 };
 
 export type TreeHookReturnProps = TreeHookProps &
@@ -30,6 +31,7 @@ export type TreeHookReturnProps = TreeHookProps &
 export type TreeProps = TreeHookProps & {
   icon?: IconConfig;
   getLabel?: (node: TreeData) => React.ReactNode;
+  leafKey?: string;
   value?: {
     selectedId?: string[] | undefined | null;
     expandedId?: string[] | undefined | null;
@@ -51,6 +53,7 @@ export type TreeContextType = {
   onSelect?: (node: TreeData) => void;
   icon?: IconConfig;
   getLabel?: (node: TreeData) => React.ReactNode;
+  leafKey?: string;
 } & TreeHookReturnProps;
 
 export type TreeInitialState = {
