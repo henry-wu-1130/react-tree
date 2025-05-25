@@ -6,7 +6,9 @@
 
 React Tree is a tree data structure ui library designed for easily building tree components.
 
-[Demo](https://stackblitz.com/edit/vitejs-vite-x4q3p7?file=index.html,src%2FApp.tsx,package.json,src%2Fmain.tsx,package-lock.json&terminal=dev)
+### Live Demo
+
+Check out our [interactive demo](https://stackblitz.com/edit/vitejs-vite-x4q3p7?file=index.html,src%2FApp.tsx,package.json,src%2Fmain.tsx,package-lock.json&terminal=dev) showcasing basic usage, custom icons, and state management examples.
 
 **Note: This project is for testing purposes only and is not intended for production use.**
 
@@ -14,31 +16,26 @@ React Tree is a tree data structure ui library designed for easily building tree
 
 - 🪝&nbsp; **Hook provided**: useTreeView hooks provide tree expanded & selected state for easily render tree component
 
-- 🖼️&nbsp; **Custom Icons**: Supports custom icons using React nodes for enhanced visual appeal.
+- 🖼️&nbsp; **Custom Icons**: Supports custom icons using React nodes for enhanced visual appeal
+
+- 🎯&nbsp; **Flexible Selection**: Support both single and multiple node selection
+
+- 🎨&nbsp; **Customizable Labels**: Easily customize node labels with your own render function
+
+- 🌲&nbsp; **Nested Data**: Handle deeply nested tree structures with ease
 
 ## Installation
 
-Using npm, Yarn, or PNPM:
-
-1. Install the package with npm:
-
-```
+```bash
+# Using npm
 npm install @henliwu1491/react-tree
-```
 
-2. Install the package with Yarn:
-
-```
+# Using yarn
 yarn add @henliwu1491/react-tree
-```
 
-3. Install the package with PNPM:
-
-```
+# Using pnpm
 pnpm add @henliwu1491/react-tree
 ```
-
-Choose the package manager that you prefer for installation.
 
 ## Include CSS
 
@@ -183,15 +180,15 @@ Below are the available configuration options for the hook:
 
 | Name                   | Type                         | Description | Default |
 | ---------------------- | ---------------------------- | ----------- | ------- |
-| `expandedId`           | `string[]`                   |             |         |
-| `selectedId`           | `string[]`                   |             |         |
-| `data`                 | `TreeRawData[]`              |             |         |
-| `onExpand`             | `function`                   |             |         |
-| `onSelect`             | `function`                   |             |         |
-| `setExpand`            | `(string) => void`           |             |         |
-| `checkNodeAndChildren` | `(string) => void`           |             |         |
-| `checkSingleNode`      | `(string) => void`           |             |         |
-| `setInitialState`      | `(TreeInitialState) => void` |             |         |
+| `expandedId`           | `string[]`                   | Array of expanded node IDs | `[]` |
+| `selectedId`           | `string[]`                   | Array of selected node IDs | `[]` |
+| `data`                 | `TreeRawData[]`              | Processed tree data structure | `[]` |
+| `onExpand`             | `function`                   | Callback when node is expanded/collapsed | - |
+| `onSelect`             | `function`                   | Callback when node is selected/deselected | - |
+| `setExpand`            | `(string) => void`           | Function to expand/collapse a node | - |
+| `checkNodeAndChildren` | `(string) => void`           | Select a node and all its children | - |
+| `checkSingleNode`      | `(string) => void`           | Select only the specified node | - |
+| `setInitialState`      | `(TreeInitialState) => void` | Set the initial expanded and selected state | - |
 
 ## `<TreeView />` Props
 
