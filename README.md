@@ -1,8 +1,10 @@
 # React Tree
 
 [![npm](https://img.shields.io/npm/v/@henliwu1491/react-tree.svg?style=flat-square)](https://www.npmjs.com/package/@henliwu1491/react-tree)
-[![Build Status](https://img.shields.io/github/actions/workflow/status/@henliwu1491/react-tree/main.yml?branch=main&style=flat-square)](https://github.com/henry-wu-1130/react-tree/actions/workflows/main.yml)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/henry-wu-1130/react-tree/main.yml?branch=main&style=flat-square)](https://github.com/henry-wu-1130/react-tree/actions/workflows/main.yml)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://raw.githubusercontent.com/henliwu1491/react-tree/main/LICENSE.txt)
+![minzipped size](https://badgen.net/bundlephobia/minzip/@henliwu1491/react-tree@0.0.10)
+[![Coverage Status](https://coveralls.io/repos/github/henry-wu-1130/react-tree/badge.svg?branch=main)](https://coveralls.io/github/henry-wu-1130/react-tree?branch=main)
 
 React Tree is a tree data structure ui library designed for easily building tree components.
 
@@ -178,17 +180,17 @@ Below are the available configuration options for the hook:
 
 ### Instance
 
-| Name                   | Type                         | Description | Default |
-| ---------------------- | ---------------------------- | ----------- | ------- |
-| `expandedId`           | `string[]`                   | Array of expanded node IDs | `[]` |
-| `selectedId`           | `string[]`                   | Array of selected node IDs | `[]` |
-| `data`                 | `TreeRawData[]`              | Processed tree data structure | `[]` |
-| `onExpand`             | `function`                   | Callback when node is expanded/collapsed | - |
-| `onSelect`             | `function`                   | Callback when node is selected/deselected | - |
-| `setExpand`            | `(string) => void`           | Function to expand/collapse a node | - |
-| `checkNodeAndChildren` | `(string) => void`           | Select a node and all its children | - |
-| `checkSingleNode`      | `(string) => void`           | Select only the specified node | - |
-| `setInitialState`      | `(TreeInitialState) => void` | Set the initial expanded and selected state | - |
+| Name                   | Type                         | Description                                 | Default |
+| ---------------------- | ---------------------------- | ------------------------------------------- | ------- |
+| `expandedId`           | `string[]`                   | Array of expanded node IDs                  | `[]`    |
+| `selectedId`           | `string[]`                   | Array of selected node IDs                  | `[]`    |
+| `data`                 | `TreeRawData[]`              | Processed tree data structure               | `[]`    |
+| `onExpand`             | `function`                   | Callback when node is expanded/collapsed    | -       |
+| `onSelect`             | `function`                   | Callback when node is selected/deselected   | -       |
+| `setExpand`            | `(string) => void`           | Function to expand/collapse a node          | -       |
+| `checkNodeAndChildren` | `(string) => void`           | Select a node and all its children          | -       |
+| `checkSingleNode`      | `(string) => void`           | Select only the specified node              | -       |
+| `setInitialState`      | `(TreeInitialState) => void` | Set the initial expanded and selected state | -       |
 
 ## `<TreeView />` Props
 
@@ -243,7 +245,7 @@ export type TreeRawData = {
 
 ## 🤝Contributing
 
-We welcome contributions! If you find a bug or have an idea for improvement, please open an issue or submit a pull request on [Github](https://github.com/henry-wu-1130/react-tree-node).
+We welcome contributions! If you find a bug or have an idea for improvement, please open an issue or submit a pull request on [Github](https://github.com/henry-wu-1130/react-tree).
 
 1. [Fork it](https://github.com/mevlutcantuna/react-beautiful-timeline/fork)
 2. Create your feature branch (`git checkout -b new-feature`)
