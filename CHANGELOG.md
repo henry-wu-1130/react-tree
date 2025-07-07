@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.0.11](https://github.com/henry-wu-1130/react-tree/compare/v0.0.10...v0.0.11) (2025-07-07)
+
+
+### Features
+
+* add showSelectIcon feature and new helper functions ([a8a2756](https://github.com/henry-wu-1130/react-tree/commit/a8a2756fe5a4868dd9398e9302224c91efc89875))
+
 ## [0.0.10](https://github.com/henry-wu-1130/react-tree/compare/v0.0.9...v0.0.10) (2024-06-04)
 
 
