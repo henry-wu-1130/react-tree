@@ -36,6 +36,7 @@ export type TreeProps = TreeHookProps & {
     selectedId?: string[] | undefined | null;
     expandedId?: string[] | undefined | null;
   };
+  showSelectIcon?: boolean | ((node: TreeData) => boolean);
 };
 
 type IconConfig = {
@@ -54,6 +55,7 @@ export type TreeContextType = {
   icon?: IconConfig;
   getLabel?: (node: TreeData) => React.ReactNode;
   leafKey?: string;
+  showSelectIcon?: boolean | ((node: TreeData) => boolean);
 } & TreeHookReturnProps;
 
 export type TreeInitialState = {

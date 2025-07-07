@@ -55,6 +55,7 @@ const TreeNode = ({
     setExpand,
     checkNodeAndChildren,
     checkSingleNode,
+    showSelectIcon,
   } = useContext(TreeContext as React.Context<TreeContextType>);
 
   const isRoot = node.level === 0;
@@ -65,8 +66,20 @@ const TreeNode = ({
   const shouldShowExpand = !isLeaf;
   const shouldShowExpandContent =
     isExpandedId && !!node.children && !!node.children.length;
-  const shouldShowSelectIcon =
-    icon?.checked || icon?.unchecked || icon?.indeterminate;
+
+  let shouldShowSelectIcon;
+  if (
+    typeof showSelectIcon === 'boolean' ||
+    typeof showSelectIcon === 'function'
+  ) {
+    shouldShowSelectIcon =
+      typeof showSelectIcon === 'function'
+        ? showSelectIcon(node)
+        : showSelectIcon;
+  } else {
+    shouldShowSelectIcon =
+      icon?.checked || icon?.unchecked || icon?.indeterminate;
+  }
 
   const handleExpand = useCallback(() => {
     setExpand(node.value + '');
@@ -179,6 +192,7 @@ function Tree({
   onExpand,
   onSelect,
   icon,
+  showSelectIcon,
   getLabel = (node) => node.label,
   leafKey,
 }: TreeProps): React.ReactNode {
@@ -215,6 +229,7 @@ function Tree({
       icon={icon}
       getLabel={getLabel}
       leafKey={leafKey}
+      showSelectIcon={showSelectIcon}
     >
       {renderNodes(nodes)}
     </TreeProvider>
