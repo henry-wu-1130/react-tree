@@ -4,8 +4,8 @@ on:
   push:
     branches: [main, dev, test]
   schedule:
-    # 每 15 分鐘執行一次
-    - cron: '*/15 * * * *'
+    # 每天凌晨 1 點執行
+    - cron: '0 1 * * *'
 
 jobs:
   renovate:
