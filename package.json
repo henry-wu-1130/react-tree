@@ -39,7 +39,10 @@
     "prepare": "husky install",
     "release": "npx commit-and-tag-version && npm run build",
     "pre-release": "npx commit-and-tag-version -- --prerelease alpha && npm run build",
-    "publish": "npm publish --access public"
+    "publish": "npm publish --access public",
+    "test": "vitest",
+    "test:watch": "vitest watch",
+    "test:coverage": "vitest run --coverage"
   },
   "lint-staged": {
     "./lib/**/*.{ts,tsx,js,jsx}": "eslint --fix",
@@ -50,6 +53,7 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.6.3",
     "@types/node": "^20.10.4",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
@@ -57,6 +61,7 @@
     "@typescript-eslint/eslint-plugin": "^6.14.0",
     "@typescript-eslint/parser": "^6.14.0",
     "@vitejs/plugin-react-swc": "^3.5.0",
+    "@vitest/coverage-v8": "^3.2.4",
     "autoprefixer": "^10.4.19",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
@@ -67,13 +72,15 @@
     "eslint-plugin-react-refresh": "^0.4.5",
     "eslint-plugin-unused-imports": "^3.0.0",
     "husky": "^8.0.3",
+    "jsdom": "^26.1.0",
     "lint-staged": "^15.2.0",
     "postcss": "^8.4.38",
     "prettier": "^3.1.1",
     "tailwindcss": "^3.4.3",
     "typescript": "^5.2.2",
     "vite": "^5.0.8",
-    "vite-plugin-dts": "^3.6.4"
+    "vite-plugin-dts": "^3.6.4",
+    "vitest": "^3.2.4"
   },
   "dependencies": {
     "clsx": "^2.1.1",
